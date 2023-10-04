@@ -2,6 +2,8 @@
 {% load static %}
 <html lang="en">
 <head>
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" rel="stylesheet" />
 <style>
     /* Botones */
     .btn-exportar-excel{
@@ -340,16 +342,16 @@
           <!-- Add icons to the links using the .nav-icon class
               with font-awesome or any other icon font library -->
           <li class="nav-Nomina">
-            <a href="#" class="nav-SubNo">
+            <a href="{% url 'departamento-list' %}" class="nav-SubNo">
               <p class="Nomina">
-                Cargos
+                Departamentos
               </p>
             </a>
           </li>
           <li class="nav-Nomina">
-            <a href="{% url 'departamento-list' %}" class="nav-SubNo">
+            <a href="{% url 'cargo_list' %}" class="nav-SubNo">
               <p class="Nomina">
-                Departamentos
+                Cargos
               </p>
             </a>
           </li>
@@ -389,13 +391,15 @@
                 <table id="tbdata" class="table">
                     <thead>
                         <tr>
-                            <th>
-                                Departamento
-                            </th>
-                            <th>
-                                Estado
-                            </th>
-                            <th></th>
+                          <th>
+                            Departamento
+                          </th>
+                          <th>
+                            Estado
+                          </th>
+                          <th>
+                            Fecha Registro
+                          </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -441,8 +445,65 @@
 <script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js'%}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+$.widget.bridge('uibutton', $.ui.button)
 </script>
+<!-- dataTable-->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#tbdata').DataTable({
+            "language":{
+                url:"https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            },
+            dom:"Bfrtip",
+            buttons:[
+                {
+                    extend: "excelHtml5",
+                    text:"Exportar Excel",
+                    filename:"Reporte Del Los Departamentos ",
+                    title:"",
+                    exportOptions:{
+                        columns:[0,1,2]
+                    },
+                    className:"btn-exportar-excel"
+                },
+                {
+                    extend: "pdfHtml5",
+                    text:"Exportar PDF",
+                    filename:"Reporte Del Los Departamentos",
+                    title:"",
+                    exportOptions:{
+                        columns:[0,1,2]
+                    },
+                    className:"btn-exportar-pdf"
+                },
+                {
+                    extend: "print",
+                    title:"",
+                    exportOptions:{
+                        columns:[0,1,2]
+                    },
+                    className:"btn-exportar-print"
+
+                },
+                "pageLength"
+            ]
+
+        });
+    });
+</script>
+<!-- dataTable end-->
+
 <!-- Bootstrap 4 -->
 <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 <!-- ChartJS -->

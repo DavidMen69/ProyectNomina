@@ -2,8 +2,53 @@
 {% load static %}
 <html lang="en">
 <head>
-  <style>
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+<style>
+    /* Botones */
+    .btn-exportar-excel{
+            background-color: #198754 !important;
+            color: white !important;
+            border: none !important; 
+            padding: 6px 16px !important; 
+            cursor: pointer !important; 
+            border-radius: 5px !important; 
+        }
+        .btn-exportar-excel:hover {
+            background-color: #006632 !important;
+        }
 
+
+        .btn-exportar-pdf{
+            background-color: #ff0000 !important; 
+            color: white !important;
+            border: none !important; 
+            padding: 6px 16px !important; 
+            cursor: pointer !important; 
+            border-radius: 5px !important; 
+        }
+        .btn-exportar-pdf:hover {
+                background-color: #990000 !important;
+        }
+        
+        .btn-exportar-print {
+            background-color: #007bff !important;
+            color: white !important; 
+            border: none !important; 
+            padding: 6px 16px !important; 
+            cursor: pointer !important; 
+            border-radius: 5px !important; 
+        }
+
+        .btn-exportar-print:hover {
+            background-color: #0056b3 !important;
+        }
+
+
+    /* -------------------*/
+    .card-header {
+            text-align: left;
+        }
     .nav-Nomina {
       list-style: none; /* Elimina los puntos de lista */
       margin: 10px 0; /* Espacio entre elementos */
@@ -87,7 +132,7 @@
             color: #28a745; /* Color del icono (verde) */
             margin-right: 10px; /* Espaciado derecho entre el icono y el texto */
         }
-    </style>
+</style>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Proyecto Nomina</title>
@@ -129,10 +174,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{% url 'BASE' %}" class="nav-link">Inicio</a>
+        <a href="{% url 'BASE' %}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contacto</a>
+        <a href="#" class="nav-link">Contact</a>
       </li>
     </ul>
 
@@ -332,34 +377,57 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  {% block content %}
 
   <div class="content-wrapper">
-    <div class="presentation">
-        <h1>Bienvenido al Sistema de Nómina</h1>
-        <p>Este sistema está diseñado para ayudarte a gestionar la nómina de tu empresa de manera eficiente.</p>
-    </div>
-    <div class="vision">
-        <h2>Nuestra Visión</h2>
-        <p>Convertirnos en el mejor aliado de tu empresa, ofreciendo soluciones de nómina eficientes y confiables.</p>
-    </div>
+    <div class="card">
+        <div class="card-header">
+            <p>
+                <a class="btn btn-dark" asp-action="Create">Crear Nuevo Cargo</a>
+            </p>
+        </div>
+    
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tbdata" class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Cargo
+                            </th>
+                            <th>
+                                Departamento
+                            </th>
+                            <th>
+                                Estado
+                            </th>
+                            <th>
+                                Fecha Registro
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
 
-    <div class="mission">
-        <h2>Nuestra Misión</h2>
-        <p>Proporcionar un sistema de nómina completo y fácil de usar que ahorre tiempo y recursos a las empresas, garantizando precisión y cumplimiento.</p>
-    </div>
+                            </td>
+                            <td>
 
-    <div class="features">
-        <h2>Características Destacadas</h2>
-        <ul>
-            <li><i class="fas fa-check-circle"></i> Registro y seguimiento de empleados.</li>
-            <li><i class="fas fa-check-circle"></i> Gestión de cargos y departamentos.</li>
-            <li><i class="fas fa-check-circle"></i> Cálculo automático de nóminas.</li>
-            <li><i class="fas fa-check-circle"></i> Reportes personalizables.</li>
-        </ul>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <a asp-action="Edit"  class="btn-exportar-excel" asp-route-id="@item.IdRol">Editar</a> |
+                                <a asp-action="Details" class="btn-exportar-print" asp-route-id="@item.IdRol">Detalle</a> |
+                                <a asp-action="Delete" class="btn-exportar-pdf" asp-route-id="@item.IdRol"> Borrar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
   </div>
-{% endblock %}
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
@@ -383,8 +451,65 @@
 <script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js'%}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+$.widget.bridge('uibutton', $.ui.button)
 </script>
+<!-- dataTable-->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#tbdata').DataTable({
+            "language":{
+                url:"https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            },
+            dom:"Bfrtip",
+            buttons:[
+                {
+                    extend: "excelHtml5",
+                    text:"Exportar Excel",
+                    filename:"Reporte Del Los Departamentos ",
+                    title:"",
+                    exportOptions:{
+                        columns:[0,1,2,3]
+                    },
+                    className:"btn-exportar-excel"
+                },
+                {
+                    extend: "pdfHtml5",
+                    text:"Exportar PDF",
+                    filename:"Reporte Del Los Departamentos",
+                    title:"",
+                    exportOptions:{
+                        columns:[0,1,2,3]
+                    },
+                    className:"btn-exportar-pdf"
+                },
+                {
+                    extend: "print",
+                    title:"",
+                    exportOptions:{
+                        columns:[0,1,2,3]
+                    },
+                    className:"btn-exportar-print"
+
+                },
+                "pageLength"
+            ]
+
+        });
+    });
+</script>
+<!-- dataTable end-->
+
 <!-- Bootstrap 4 -->
 <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 <!-- ChartJS -->
