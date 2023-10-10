@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from .models import Departamento, Cargo
+from .models import Departamento, Cargo, Empleado
 
 # Define una vista llamada BASE que renderiza la plantilla 'base.html'.
 def BASE(request):
@@ -49,10 +49,10 @@ class DepartamentoDeleteView(DeleteView):
 # ------------------Inicio Del Model Cargo--------------------------------
 
 # Lista de Cargo
-class CargoListView(ListView):
-    model = Cargo
-    template_name = 'cargo_list.html'
-    context_object_name = 'cargos'
+def listar_cargos(request):
+    cargos = Cargo.objects.all()  # Obtener todos los objetos Cargo de la base de datos
+    return render(request, 'cargo_list.html', {'cargos': cargos})
+
 
 # Crear un Cargo
 class CargoCreateView(CreateView):
@@ -75,3 +75,33 @@ class CargoDeleteView(DeleteView):
     model = Cargo
     template_name = 'cargo_delete.html'
     success_url = '/cargos/'  # Redirigir a la lista de departamentos después de eliminar uno
+
+
+# ------------------Inicio Del Model Empleado--------------------------------
+
+# Lista de Empleados
+
+def listar_empleados(request):
+    empleados = Empleado.objects.all()  # Obtener todos los objetos Empleados de la base de datos
+    return render(request, 'empleado_list.html', {'empleados': empleados})
+
+# Crear un Empleados
+class EmpleadoCreateView(CreateView):
+    model = Empleado
+    template_name = 'empleado_create.html'
+    fields = ['num_documento', 'nombres','apellido1', 'apellido2','telefono', 'correo','estado']
+    success_url = '/empleados/'  # Redirigir a la lista de cargo después de crear uno
+
+#Actualizar Empleados
+class EmpleadoUpdateView(UpdateView):
+    model = Empleado
+    template_name = 'empleado_update.html'
+    fields = ['num_documento', 'nombres','apellido1', 'apellido2','telefono', 'correo','estado']
+    success_url = '/empleados/'  # Redirigir a la lista de departamentos después de crear uno
+
+# Eliminar un Empleados
+
+class EmpleadoDeleteView(DeleteView):
+    model = Empleado
+    template_name = 'empleado_delete.html'
+    success_url = '/Empleados/'  # Redirigir a la lista de departamentos después de eliminar uno

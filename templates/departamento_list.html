@@ -174,10 +174,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{% url 'BASE' %}" class="nav-link">Home</a>
+        <a href="{% url 'BASE' %}" class="nav-link">Inicio</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="#" class="nav-link">Contacto</a>
       </li>
     </ul>
 
@@ -342,21 +342,21 @@
           <!-- Add icons to the links using the .nav-icon class
               with font-awesome or any other icon font library -->
           <li class="nav-Nomina">
-            <a href="{% url 'departamento-list' %}" class="nav-SubNo">
+            <a href="{% url 'departamento_list' %}" class="nav-SubNo">
               <p class="Nomina">
                 Departamentos
               </p>
             </a>
           </li>
           <li class="nav-Nomina">
-            <a href="{% url 'cargo_list' %}" class="nav-SubNo">
+            <a href="{% url 'listar_cargos' %}" class="nav-SubNo">
               <p class="Nomina">
                 Cargos
               </p>
             </a>
           </li>
           <li class="nav-Nomina">
-            <a href="#" class="nav-SubNo">
+            <a href="{% url 'listar_empleados' %}" class="nav-SubNo">
               <p class="Nomina">
                 Empleados
               </p>
@@ -390,32 +390,38 @@
             <div class="table-responsive">
                 <table id="tbdata" class="table">
                     <thead>
-                        <tr>
-                          <th>
-                            Departamento
-                          </th>
-                          <th>
-                            Estado
-                          </th>
-                          <th>
-                            Fecha Registro
-                          </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-                                <a asp-action="Edit"  class="btn-exportar-excel" asp-route-id="@item.IdRol">Editar</a> |
-                                <a asp-action="Details" class="btn-exportar-print" asp-route-id="@item.IdRol">Detalle</a> |
-                                <a asp-action="Delete" class="btn-exportar-pdf" asp-route-id="@item.IdRol"> Borrar</a>
-                            </td>
-                        </tr>
+                      <tr>
+                        <th>
+                          Departamento
+                        </th>
+                        <th>
+                          Estado
+                        </th>
+                        <th>
+                          Fecha Registro
+                        </th>
+                        <th>Acciones</th> <!-- Agregado el encabezado de Acciones -->
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for departamento in departamentos %}
+                    <tr>
+                        <td>{{ departamento.nom_departamento }}</td>
+                        <td>
+                          {% if departamento.estado %}
+                            Activo
+                          {% else %}
+                            Inactivo
+                          {% endif %}
+                        </td>
+                        <td>{{ departamento.fecha_registro }}</td>
+                        <td>
+                            <a asp-action="Edit" class="btn-exportar-excel" asp-route-id="@departamento.Id">Editar</a> |
+                            <a asp-action="Details" class="btn-exportar-print" asp-route-id="@departamento.Id">Detalle</a> |
+                            <a asp-action="Delete" class="btn-exportar-pdf" asp-route-id="@departamento.Id"> Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -424,7 +430,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; 1997-2021 <a href="https://Nomina.io">Nomina.io</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.2.0
