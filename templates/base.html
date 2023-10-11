@@ -2,8 +2,57 @@
 {% load static %}
 <html lang="en">
 <head>
-  <style>
 
+  <title>
+
+    {% block title %} {% endblock %}
+
+  </title>
+  <style>
+    /* Botones */
+    .btn-exportar-excel{
+            background-color: #198754 !important;
+            color: white !important;
+            border: none !important; 
+            padding: 6px 16px !important; 
+            cursor: pointer !important; 
+            border-radius: 5px !important; 
+        }
+        .btn-exportar-excel:hover {
+            background-color: #006632 !important;
+        }
+
+
+        .btn-exportar-pdf{
+            background-color: #ff0000 !important; 
+            color: white !important;
+            border: none !important; 
+            padding: 6px 16px !important; 
+            cursor: pointer !important; 
+            border-radius: 5px !important; 
+        }
+        .btn-exportar-pdf:hover {
+                background-color: #990000 !important;
+        }
+        
+        .btn-exportar-print {
+            background-color: #007bff !important;
+            color: white !important; 
+            border: none !important; 
+            padding: 6px 16px !important; 
+            cursor: pointer !important; 
+            border-radius: 5px !important; 
+        }
+
+        .btn-exportar-print:hover {
+            background-color: #0056b3 !important;
+        }
+
+
+    /* -------------------*/
+    .card-header {
+            text-align: left;
+        }
     .nav-Nomina {
       list-style: none; /* Elimina los puntos de lista */
       margin: 10px 0; /* Espacio entre elementos */
@@ -87,11 +136,12 @@
             color: #28a745; /* Color del icono (verde) */
             margin-right: 10px; /* Espaciado derecho entre el icono y el texto */
         }
-    </style>
+</style>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Proyecto Nomina</title>
-
+  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" rel="stylesheet" />
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -332,7 +382,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  {% block content %}
+{% block content %}
 
   <div class="content-wrapper">
     <div class="presentation">
@@ -385,6 +435,20 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
+
+
+  <!-- dataTable-->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+  
 <!-- Bootstrap 4 -->
 <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
 <!-- ChartJS -->
@@ -411,5 +475,6 @@
 <script src="{% static 'assets/dist/js/demo.js'%}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{% static 'assets/dist/js/pages/dashboard.js'%}"></script>
+
 </body>
 </html>
