@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 # Definir el modelo 'Departamento'.
@@ -105,3 +106,32 @@ class Nomina(models.Model):
 
     def __str__(self):
         return f'Nómina de {self.empleado.nombres} {self.empleado.apellido1} {self.empleado.apellido2}'
+
+
+
+class Rol(models.Model):
+    descripcion = models.CharField(max_length=50, verbose_name='Descripcion Del Rol')
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.descripcion
+
+class Permiso(models.Model):
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    nombre_menu = models.CharField(max_length=50, verbose_name='Nombre Del Menu')
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.nombre_menu
+
+
+class Usuario(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    num_documento = models.CharField(max_length=30, verbose_name='Numero De Documento')
+    nombres = models.CharField(max_length=60)
+    apellido1 = models.CharField(max_length=30, verbose_name='Apellido Paterno')
+    apellido2 = models.CharField(max_length=30, verbose_name='Apellido Materno')
+    correo = models.CharField(max_length=50, verbose_name='Correo Electronico')
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    estado = models.BooleanField(default=False)
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.user.username} ({self.rol.descripcion})'

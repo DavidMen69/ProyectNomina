@@ -12,13 +12,13 @@ urlpatterns = [
     path('departamentos/eliminar/<int:pk>/', DepartamentoDeleteView.as_view(), name='departamento_delete'),
 
     # ------------------Inicio Del Model Cargo--------------------------------
-    path('cargos/', views.listar_cargos, name='listar_cargos'),
+    path('cargo', views.listar_cargos, name='listar_cargos'),
     path('cargos/crear/', CargoCreateView.as_view(), name='cargo_create'),
     path('cargos/editar/<int:pk>/', CargoUpdateView.as_view(), name='cargo_update'),
     path('cargos/eliminar/<int:pk>/', CargoDeleteView.as_view(), name='cargo_delete'),
 
     # ------------------Inicio Del Model Departamento--------------------------------
-    path('empleados/', views.listar_empleados, name='listar_empleados'),
+    path('empleado', views.listar_empleados, name='listar_empleados'),
     path('empleados/crear/', EmpleadoCreateView.as_view(), name='empleado_create'),
     path('empleados/editar/<int:pk>/', EmpleadoUpdateView.as_view(), name='empleado_update'),
     path('empleados/eliminar/<int:pk>/', EmpleadoDeleteView.as_view(), name='empleado_delete'),

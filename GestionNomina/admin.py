@@ -1,5 +1,5 @@
 from django.contrib import admin
-from GestionNomina.models import Departamento,Empleado,Nomina,Cargo
+from GestionNomina.models import Departamento,Empleado,Nomina,Cargo,Rol,Usuario,Permiso
 # Register your models here.
 
 class DepartamentoAdmin(admin.ModelAdmin):
@@ -18,3 +18,6 @@ admin.site.register(Departamento,DepartamentoAdmin)
 admin.site.register(Cargo,CargosAdmin)
 admin.site.register(Empleado, EmpleadoAdmin)
 admin.site.register(Nomina)
+admin.site.register(Usuario)
+admin.site.register(Permiso)
+admin.site.register(Rol)
