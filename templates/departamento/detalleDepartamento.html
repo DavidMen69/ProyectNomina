@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %} Detalle Departamento {% endblock %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="card">
+    <h1 class="card-header">Detalles del Departamento</h1>
+    <form class="card-body">
+      <div class="form-group">
+        <label for="nombreDepartamento">Nombre del Departamento:</label>
+        <input type="text" id="nombreDepartamento" name="nombreDepartamento" value="{{ departamento.nom_departamento }}" readonly class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="estadoDepartamento">Estado:</label>
+        <input type="text" id="estadoDepartamento" name="estadoDepartamento" value="{% if departamento.estado %}Activo{% else %}Inactivo{% endif %}" readonly class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="fechaRegistroDepartamento">Fecha de Registro:</label>
+        <input type="text" id="fechaRegistroDepartamento" name="fechaRegistroDepartamento" value="{{ departamento.fecha_registro|date:'d/m/Y' }}" readonly class="form-control">
+      </div>
+    </form>
+    <a href="{% url 'departamento_list' %}" class="btn btn-primary">Volver a la lista de departamentos</a>
+  </div>
+</div>
+
+<style>
+  .card {
+    border: 1px solid #007BFF;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+{% endblock %}

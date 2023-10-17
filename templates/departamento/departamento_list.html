@@ -4,56 +4,89 @@
 {% block content %}
   <!-- Content Wrapper. Contains page content -->
 
-  <div class="content-wrapper">
-    <div class="card">
-        <div class="card-header">
-            <p>
-                <a class="btn btn-dark" asp-action="Create">Crear Nuevo Departamento</a>
-            </p>
-        </div>
-    
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="tbdata" class="table">
-                    <thead>
-                      <tr>
-                        <th>
-                          Departamento
-                        </th>
-                        <th>
-                          Estado
-                        </th>
-                        <th>
-                          Fecha Registro
-                        </th>
-                        <th>Acciones</th> <!-- Agregado el encabezado de Acciones -->
-                      </tr>
-                  </thead>
-                  <tbody>
-                    {% for departamento in departamentos %}
-                    <tr>
-                        <td>{{ departamento.nom_departamento }}</td>
-                        <td>
-                          {% if departamento.estado %}
-                            Activo
-                          {% else %}
-                            Inactivo
-                          {% endif %}
-                        </td>
-                        <td>{{ departamento.fecha_registro }}</td>
-                        <td>
-                          <a href="Edit" class="btn-exportar-excel">Editar</a> |
-                          <a href="Details" class="btn-exportar-print">Detalle</a> |
-                          <a href="Delete" class="btn-exportar-pdf"> Borrar</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+<div class="content-wrapper">
+  <div class="card">
+      <div class="card-header">
+          <p>
+            <button class="btn btn-custom" data-toggle="modal" data-target="#crearDepartamentoModal">Crear Nuevo Departamento</button>
+          </p>
+      </div>
+      <!-- Modal para crear departamento -->
+      <div class="modal fade" id="crearDepartamentoModal" tabindex="-1" role="dialog" aria-labelledby="crearDepartamentoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearDepartamentoModalLabel">Crear Nuevo Departamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                  <form method="post" action="/crearDepartamento/">{% csrf_token %}
+                      <div class="form-group">
+                          <label for="txtNombre">Nombre del Departamento:</label>
+                          <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre Del Departamento" required maxlength="50">
+                      </div>
+                      
+                      <div class="form-group">
+                          <label for="txtEstado">Estado:</label>
+                          <select id="txtEstado" name="txtEstado" class="form-control" required>
+                              <option value="" selected disabled>Selecciona un Estado</option>
+                              <option value="True">Activo</option>
+                              <option value="False">Inactivo</option>
+                          </select>
+                      </div>
+                      <button type="submit" class="btn-exportar-excel">Crear Departamento</button>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-exportar-pdf" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
-    </div>
+      </div>
+      <div class="card-body">
+          <div class="table-responsive">
+              <table id="tbdata" class="table">
+                  <thead>
+                    <tr>
+                      <th>
+                        Departamento
+                      </th>
+                      <th>
+                        Estado
+                      </th>
+                      <th>
+                        Fecha Registro
+                      </th>
+                      <th>Acciones</th> <!-- Agregado el encabezado de Acciones -->
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for departamento in departamentos %}
+                  <tr>
+                      <td>{{ departamento.nom_departamento }}</td>
+                      <td>
+                        {% if departamento.estado %}
+                          Activo
+                        {% else %}
+                          Inactivo
+                        {% endif %}
+                      </td>
+                      <td>{{ departamento.fecha_registro }}</td>
+                      <td>
+                        <a href="{% url 'edicionDepartamento' departamento.id %}" class="btn-exportar-excel">Editar</a> |
+                        <a href="{% url 'detalleDepartamento' departamento.id %}" class="btn-exportar-print">Detalle</a> |
+                        <a href="{% url 'eliminarDepartamento' departamento.id %}" class="btn-exportar-pdf"> Borrar</a>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
   </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -99,5 +132,6 @@
         });
     });
 </script>
-
 {% endblock %}
+
+

@@ -6,8 +6,47 @@
     <div class="card">
         <div class="card-header">
             <p>
-                <a class="btn btn-dark" asp-action="Create">Crear Nuevo Cargo</a>
+                <button class="btn btn-custom" data-toggle="modal" data-target="#crearCargoModal">Crear Nuevo Cargo</button> 
             </p>
+        </div>
+        <!-- Modal para crear cargo -->
+        <div class="modal fade" id="crearCargoModal" tabindex="-1" role="dialog" aria-labelledby="crearCargoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="crearCargoModalLabel">Crear Cargo Departamento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{% url 'crearCargo' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="txtNombre">Nombre del Cargo:</label>
+                                <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre Del Cargo" required maxlength="50">
+                            </div>
+                            <div class="form-group">
+                                <label for="departamento">Departamento:</label>
+                                <select id="departamento" name="departamento" class="form-control" required>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtEstado">Estado:</label>
+                                <select id="txtEstado" name="txtEstado" class="form-control" required>
+                                    <option value="" selected disabled>Selecciona un Estado</option>
+                                    <option value="True">Activo</option>
+                                    <option value="False">Inactivo</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-exportar-excel">Crear Cargo</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-exportar-pdf" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -43,9 +82,9 @@
                         </td>
                         <td>{{ cargo.fecha_registro }}</td>
                         <td>
-                            <a asp-action="Edit" class="btn-exportar-excel" asp-route-id="@cargo.Id">Editar</a> |
-                            <a asp-action="Details" class="btn-exportar-print" asp-route-id="@cargo.Id">Detalle</a> |
-                            <a asp-action="Delete" class="btn-exportar-pdf" asp-route-id="@cargo.Id"> Borrar</a>
+                            <a class="btn-exportar-excel">Editar</a> |
+                            <a class="btn-exportar-print">Detalle</a> |
+                            <a class="btn-exportar-pdf"> Borrar</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -55,6 +94,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -96,5 +136,36 @@
             ]
         });
     });
+</script>
+
+<script>
+
+const listarDepartamento = async () => {
+    try {
+        const response = await fetch("./departamento");
+        const data = await response.json();
+        if (data.message === "success") {
+            let opciones = "<option selected disabled>Selecciona un Departamento</option>";
+            data.departamentos.forEach((departamento) => {
+                opciones += `<option value='${departamento.id}'>${departamento.nom_departamento}</option>`;
+            });
+            document.getElementById("departamento").innerHTML = opciones;
+        } else {
+            alert("Departamentos No Encontrados...");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const cargaInicial = async () => {
+    await listarDepartamento();
+};
+
+window.addEventListener("load", async () => {
+    await cargaInicial();
+});
+
+
 </script>
 {% endblock %}

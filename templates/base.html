@@ -10,6 +10,25 @@
   </title>
   <style>
     /* Botones */
+/* Estilos personalizados para el botón */
+.btn-custom {
+  background: linear-gradient(to bottom, #3498db, #2980b9); /* Fondo degradado en azul */
+  color: white !important;
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+  font-size: 16px; /* Tamaño de fuente */
+  transition: background-color 0.3s; /* Transición de color de fondo */
+  font-weight: bold; /* Texto en negrita para resaltarlo */
+  text-transform: uppercase; /* Texto en mayúsculas */
+}
+
+.btn-custom:hover {
+  background: linear-gradient(to bottom, #2980b9, #3498db); /* Cambio de color al pasar el mouse */
+}
+
+
     .btn-exportar-excel{
             background-color: #198754 !important;
             color: white !important;
@@ -322,24 +341,13 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{% static 'assets/dist/img/user2-160x160.jpg'%}" class="img-circle elevation-2" alt="User Image">
+          <img src="{% static 'assets/dist/img/imgDavid.jpeg' %}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Jhonatan Urrego Nieves</a>
+          <a href="#" class="d-block">David Mendoza Hernandez </a>
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">

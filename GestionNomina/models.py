@@ -19,8 +19,11 @@ class Departamento(models.Model):
     def __str__(self):
         return self.nom_departamento
 
+    class Meta:
+        db_table='departamento'
+
 class Cargo(models.Model):
-    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
+    departamento = models.ForeignKey(Departamento, null=False, blank=False, on_delete=models.CASCADE)
 
     nombre_cargo = models.CharField(max_length=50, verbose_name='Nombre Del Cargo')
 
@@ -31,16 +34,14 @@ class Cargo(models.Model):
     def __str__(self):
         return self.nombre_cargo
 
+    class Meta:
+        db_table='cargo'
+
 
 # Definir el modelo 'Empleado'.
 class Empleado(models.Model):
-    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
-    cargo = models.ForeignKey(
-        Cargo,
-        on_delete=models.CASCADE,
-        default=1,
-        limit_choices_to={'departamento': models.F('departamento')}
-    )
+    departamento = models.ForeignKey(Departamento, null=False, blank=False, on_delete=models.CASCADE)
+    cargo = models.ForeignKey(Cargo,null=False, blank=False, on_delete=models.CASCADE,)
 
     # Campo para almacenar el número de documento del empleado.
     num_documento = models.CharField(max_length=30, verbose_name='Numero De Documento')
@@ -69,6 +70,10 @@ class Empleado(models.Model):
     # Método para proporcionar una representación legible por humanos de una instancia del modelo.
     def __str__(self):
         return f'{self.nombres} {self.apellido1} {self.apellido2}'
+
+    
+    class Meta:
+        db_table='empleado'
 
 
 class Nomina(models.Model):
@@ -106,7 +111,8 @@ class Nomina(models.Model):
 
     def __str__(self):
         return f'Nómina de {self.empleado.nombres} {self.empleado.apellido1} {self.empleado.apellido2}'
-
+    class Meta:
+        db_table='nomina'
 
 
 class Rol(models.Model):

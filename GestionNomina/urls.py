@@ -1,19 +1,21 @@
 from django.urls import path
 from . import views
-from .views import DepartamentoListView, DepartamentoCreateView,DepartamentoUpdateView,DepartamentoDeleteView
-from .views import listar_cargos, CargoCreateView,CargoUpdateView,CargoDeleteView
+from .views import DepartamentoListView,detalleDepartamento, edicionDepartamento, crearDepartamento,editarDepartamento,eliminarDepartamento
+from .views import listar_cargos,CargoUpdateView,CargoDeleteView
 from .views import listar_empleados,EmpleadoCreateView,EmpleadoUpdateView,EmpleadoDeleteView
 urlpatterns = [
     path('', views.BASE,name='BASE' ),
     # --------------------model Departamento ---------------------------------
     path('departamentos/', DepartamentoListView.as_view(),name='departamento_list'),
-    path('departamentos/crear/', DepartamentoCreateView.as_view(), name='departamento_create'),
-    path('departamentos/editar/<int:pk>/', DepartamentoUpdateView.as_view(), name='departamento_update'),
-    path('departamentos/eliminar/<int:pk>/', DepartamentoDeleteView.as_view(), name='departamento_delete'),
-
+    path('crearDepartamento/', views.crearDepartamento),
+    path('detalleDepartamento/detalle/<int:pk>/', views.detalleDepartamento, name='detalleDepartamento'),
+    path('edicionDepartamento/edicion/<int:pk>/', views.edicionDepartamento, name='edicionDepartamento'),
+    path('editarDepartamento/editar/<int:pk>/', views.editarDepartamento, name='editarDepartamento'),
+    path('departamentos/eliminar/<int:pk>/', views.eliminarDepartamento, name='eliminarDepartamento'),
     # ------------------Inicio Del Model Cargo--------------------------------
     path('cargo', views.listar_cargos, name='listar_cargos'),
-    path('cargos/crear/', CargoCreateView.as_view(), name='cargo_create'),
+    path('departamento/', views.get_departamento, name='get_departamento'),
+    path('crearCargo/', views.crearCargo, name='crearCargo'),
     path('cargos/editar/<int:pk>/', CargoUpdateView.as_view(), name='cargo_update'),
     path('cargos/eliminar/<int:pk>/', CargoDeleteView.as_view(), name='cargo_delete'),
 

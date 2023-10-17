@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.http import JsonResponse
+from django.views.generic.edit import CreateView
+from django.views.generic import ListView,CreateView,DeleteView,UpdateView
 from .models import Departamento, Cargo, Empleado
+
+
 
 # Define una vista llamada BASE que renderiza la plantilla 'base.html'.
 def BASE(request):
@@ -15,36 +19,42 @@ class DepartamentoListView(ListView):
     # Establece el nombre de contexto que se utilizará en la plantilla para referirse a la lista de departamentos.
     context_object_name = 'departamentos'
 
+
 # Define una vista para crear un nuevo departamento.
-class DepartamentoCreateView(CreateView):
-    # Establece el modelo que se utilizará para crear el departamento.
-    model = Departamento
-    # Establece la plantilla que se utilizará para el formulario de creación de departamento.
-    template_name = 'departamento/departamento_create.html'
-    # Especifica los campos del modelo que se mostrarán en el formulario.
-    fields = ['nom_departamento', 'estado']
-    # Establece la URL a la que se redirigirá después de crear exitosamente un departamento.
-    success_url = '/departamentos/'
+def crearDepartamento(request):
+    nom_departamento = request.POST['txtNombre']
+    estado = request.POST['txtEstado'] == "True"
+    departamento = Departamento.objects.create(nom_departamento=nom_departamento,estado=estado)
+    return redirect('/departamentos/')
+
+# define el detalle del departamento
+
+def detalleDepartamento(request,pk):
+    departamento = Departamento.objects.get(id=pk)
+    return render(request, 'departamento/detalleDepartamento.html ',{'departamento': departamento})
+
 
 # Define una vista para actualizar un departamento existente.
-class DepartamentoUpdateView(UpdateView):
-    # Establece el modelo que se utilizará para actualizar el departamento.
-    model = Departamento
-    # Establece la plantilla que se utilizará para el formulario de actualización de departamento.
-    template_name = 'departamento/departamento_update.html'
-    # Especifica los campos del modelo que se mostrarán en el formulario de actualización.
-    fields = ['nom_departamento', 'estado']
-    # Establece la URL a la que se redirigirá después de actualizar exitosamente un departamento.
-    success_url = '/departamentos/'
+def edicionDepartamento(request,pk):
+    departamento = Departamento.objects.get(id=pk)
+    return render(request, 'departamento/edicionDepartamento.html ',{'departamento': departamento})
+
+def editarDepartamento(request,pk):
+    departamento = Departamento.objects.get(id=pk)
+    if request.method == 'POST':
+        nom_departamento = request.POST['txtNombre']
+        estado = request.POST['txtEstado'] == "True"
+        departamento.nom_departamento = nom_departamento
+        departamento.estado = estado
+        departamento.save()
+        return redirect('/departamentos/')
+
 
 # Define una vista para eliminar un departamento existente.
-class DepartamentoDeleteView(DeleteView):
-    # Establece el modelo que se utilizará para eliminar el departamento.
-    model = Departamento
-    # Establece la plantilla que se utilizará para la confirmación de eliminación de departamento.
-    template_name = 'departamento/departamento_delete.html'
-    # Establece la URL a la que se redirigirá después de eliminar exitosamente un departamento.
-    success_url = '/departamentos/'
+def eliminarDepartamento(request,pk):
+    departamento = Departamento.objects.get(id=pk)
+    departamento.delete()
+    return redirect('/departamentos/')
 
 # ------------------Inicio Del Model Cargo--------------------------------
 
@@ -55,11 +65,22 @@ def listar_cargos(request):
 
 
 # Crear un Cargo
-class CargoCreateView(CreateView):
-    model = Cargo
-    template_name = 'cargo_create.html'
-    fields = ['nombre_cargo', 'estado']
-    success_url = '/cargos/'  # Redirigir a la lista de cargo después de crear uno
+def get_departamento(request):
+    departamentos = list(Departamento.objects.values())
+
+    if (len(departamentos)>0):
+        data = {'message':"success", 'departamentos':departamentos}
+    else:
+        data = {'message':"Not Found"}
+
+    return JsonResponse(data)
+
+def crearCargo(request):
+    nom_departamento = request.POST['txtNombre']
+    estado = request.POST['txtEstado'] == "True"
+    departamento = Departamento.objects.create(nom_departamento=nom_departamento,estado=estado)
+    return redirect('/cargos/')
+
 
 # Actualizar un Cargo
 
