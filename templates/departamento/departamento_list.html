@@ -76,8 +76,7 @@
                       <td>{{ departamento.fecha_registro }}</td>
                       <td>
                         <a href="{% url 'edicionDepartamento' departamento.id %}" class="btn-exportar-excel">Editar</a> |
-                        <a href="{% url 'detalleDepartamento' departamento.id %}" class="btn-exportar-print">Detalle</a> |
-                        <a href="{% url 'eliminarDepartamento' departamento.id %}" class="btn-exportar-pdf"> Borrar</a>
+                        <a href="{% url 'detalleDepartamento' departamento.id %}" class="btn-exportar-print">Detalle</a> 
                       </td>
                   </tr>
                   {% endfor %}

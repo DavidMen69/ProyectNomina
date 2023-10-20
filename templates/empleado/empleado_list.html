@@ -6,7 +6,7 @@
 
 <!-- Content Wrapper. Contains page content -->
 
-  <div class="content-wrapper">
+<div class="content-wrapper">
     <div class="card">
         <div class="card-header">
             <p>
@@ -55,38 +55,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                      {% for empleado in empleados %}
-                      <tr>
-                          <td>{{ empleado.departamento.nom_departamento }}</td>
-                          <td>{{ empleado.cargo.nombre_cargo}}</td>
-                          <td>{{ empleado.num_documento }}</td>
-                          <td>{{ empleado.nombres }}</td>
-                          <td>{{ empleado.apellido1 }}</td>
-                          <td>{{ empleado.apellido2 }}</td>
-                          <td>{{ empleado.telefono }}</td>
-                          <td>{{ empleado.correo }}</td>
-                          <td>
-                            {% if empleado.estado %}
-                              Activo
-                            {% else %}
-                              Inactivo
-                            {% endif %}
-                          </td>
-                          <td>{{ empleado.fecha_Registro }}</td>
-                          <td>
+                    {% for empleado in empleados %}
+                    <tr>
+                        <td>{{ empleado.departamento.nom_departamento }}</td>
+                        <td>{{ empleado.cargo.nombre_cargo}}</td>
+                        <td>{{ empleado.num_documento }}</td>
+                        <td>{{ empleado.nombres }}</td>
+                        <td>{{ empleado.apellido1 }}</td>
+                        <td>{{ empleado.apellido2 }}</td>
+                        <td>{{ empleado.telefono }}</td>
+                        <td>{{ empleado.correo }}</td>
+                        <td>
+                        {% if empleado.estado %}
+                            Activo
+                        {% else %}
+                            Inactivo
+                        {% endif %}
+                        </td>
+                        <td>{{ empleado.fecha_Registro }}</td>
+                        <td>
                             <a asp-action="Edit" class="btn-exportar-excel" asp-route-id="@cargo.Id">Editar</a> |
                             <a asp-action="Details" class="btn-exportar-print" asp-route-id="@cargo.Id">Detalle</a> |
                             <a asp-action="Delete" class="btn-exportar-pdf" asp-route-id="@cargo.Id"> Borrar</a>
-                          </td>
-                      </tr>
-                      {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-  </div>
-  <!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

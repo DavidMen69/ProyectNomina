@@ -14,7 +14,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="crearCargoModalLabel">Crear Cargo Departamento</h5>
+                        <h5 class="modal-title" id="crearCargoModalLabel">Crear Cargo </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -39,7 +39,7 @@
                                     <option value="False">Inactivo</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn-exportar-excel">Crear Cargo</button>
+                            <button type="submit" class="btn-exportar-excel">Actualizar Cargo</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -82,9 +82,8 @@
                         </td>
                         <td>{{ cargo.fecha_registro }}</td>
                         <td>
-                            <a class="btn-exportar-excel">Editar</a> |
-                            <a class="btn-exportar-print">Detalle</a> |
-                            <a class="btn-exportar-pdf"> Borrar</a>
+                            <a href="{% url 'edicionCargo' cargo.id %}" class="btn-exportar-excel">Editar</a> |
+                            <a href="{% url 'detalleCargo' cargo.id %}" class="btn-exportar-print">Detalle</a> 
                         </td>
                     </tr>
                     {% endfor %}
@@ -168,4 +167,5 @@ window.addEventListener("load", async () => {
 
 
 </script>
+
 {% endblock %}

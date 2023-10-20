@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
-from .views import DepartamentoListView,detalleDepartamento, edicionDepartamento, crearDepartamento,editarDepartamento,eliminarDepartamento
-from .views import listar_cargos,CargoUpdateView,CargoDeleteView
+from .views import DepartamentoListView
 from .views import listar_empleados,EmpleadoCreateView,EmpleadoUpdateView,EmpleadoDeleteView
 urlpatterns = [
     path('', views.BASE,name='BASE' ),
@@ -11,13 +10,13 @@ urlpatterns = [
     path('detalleDepartamento/detalle/<int:pk>/', views.detalleDepartamento, name='detalleDepartamento'),
     path('edicionDepartamento/edicion/<int:pk>/', views.edicionDepartamento, name='edicionDepartamento'),
     path('editarDepartamento/editar/<int:pk>/', views.editarDepartamento, name='editarDepartamento'),
-    path('departamentos/eliminar/<int:pk>/', views.eliminarDepartamento, name='eliminarDepartamento'),
     # ------------------Inicio Del Model Cargo--------------------------------
     path('cargo', views.listar_cargos, name='listar_cargos'),
     path('departamento/', views.get_departamento, name='get_departamento'),
     path('crearCargo/', views.crearCargo, name='crearCargo'),
-    path('cargos/editar/<int:pk>/', CargoUpdateView.as_view(), name='cargo_update'),
-    path('cargos/eliminar/<int:pk>/', CargoDeleteView.as_view(), name='cargo_delete'),
+    path('editarCargo/editar<int:cargo_id>/', views.editarCargo, name='editarCargo'),
+    path('edicionCargo/edicion/<int:cargo_id>/', views.edicionCargo, name='edicionCargo'),
+    path('detalleCargo/detalle/<int:cargo_id>/', views.detalleCargo, name='detalleCargo'),
 
     # ------------------Inicio Del Model Departamento--------------------------------
     path('empleado', views.listar_empleados, name='listar_empleados'),

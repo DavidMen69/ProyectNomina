@@ -1,32 +1,44 @@
 {% extends "base.html" %}
-{% block title %} Editar Departamento {% endblock %}
+{% block title %} Editar Cargo {% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
     <div class="card">
-        <h1 class="card-header">Editar Departamento</h1>
-        <form method="post" action="{% url 'editarDepartamento' departamento.id %}" class="card-body">
+        <h1 class="card-header">Editar Cargo</h1>
+        <form method="post" action="{% url 'editarCargo' cargo.id %}" class="card-body">
             {% csrf_token %}
             <div class="form-group">
-                <label for="nombreDepartamento">Nombre del Departamento:</label>
-                <input type="text" id="txtNombre" value="{{departamento.nom_departamento}}" name="txtNombre" class="form-control" required maxlength="50">
+                <label for="txtNombre">Nombre del Cargo:</label>
+                <input type="text" id="txtNombre" value="{{ cargo.nombre_cargo }}" name="txtNombre" class="form-control" required maxlength="50">
             </div>
-            
+
             <div class="form-group">
-                <label for="estadoDepartamento">Estado:</label>
-                <select id="txtEstado" name="txtEstado" class="form-control" required>
-                    <option value="True" {% if departamento.estado %}selected{% endif %}>Activo</option>
-                    <option value="False" {% if not departamento.estado %}selected{% endif %}>Inactivo</option>
+                <label for="departamento">Departamento:</label>
+                <select id="departamento" name="departamento" class="form-control" required>
+                    {% for depto in departamentos %}
+                        <option value="{{ depto.id }}" {% if depto.id == cargo.departamento.id %}selected{% endif %}>
+                            {{ depto.nom_departamento }}
+                        </option>
+                    {% endfor %}
                 </select>
             </div>
 
-            <button type="submit" class="btn-exportar-excel">Editar Departamento</button>
+            <div class="form-group">
+                <label for="txtEstado">Estado:</label>
+                <select id="txtEstado" name="txtEstado" class="form-control" required>
+                    <option value="True" {% if cargo.estado %}selected{% endif %}>Activo</option>
+                    <option value="False" {% if not cargo.estado %}selected{% endif %}>Inactivo</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-exportar-excel">Actualizar Cargo</button>
             <div class="text-right">
                 <a href="{% url 'departamento_list' %}" class="btn-exportar-pdf">Cerrar</a>
             </div>
         </form>
     </div>
 </div>
+
 <style>
     /* Agrega estos estilos a tu archivo CSS personalizado */
 
@@ -48,6 +60,7 @@
     text-align: center;
     border-radius: 5px 5px 0 0;
 }
+
 
 /* Estilo para los campos de entrada de texto */
 .form-control {
