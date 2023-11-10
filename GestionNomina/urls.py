@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views
 from .views import DepartamentoListView
-from .views import listar_empleados,EmpleadoCreateView,EmpleadoUpdateView,EmpleadoDeleteView
+from .views import listar_empleados
 urlpatterns = [
     path('', views.BASE,name='BASE' ),
+    path('Contactos/', views.CONTACTO,name='CONTACTO' ),
     # --------------------model Departamento ---------------------------------
     path('departamentos/', DepartamentoListView.as_view(),name='departamento_list'),
     path('crearDepartamento/', views.crearDepartamento),
@@ -20,7 +21,4 @@ urlpatterns = [
 
     # ------------------Inicio Del Model Departamento--------------------------------
     path('empleado', views.listar_empleados, name='listar_empleados'),
-    path('empleados/crear/', EmpleadoCreateView.as_view(), name='empleado_create'),
-    path('empleados/editar/<int:pk>/', EmpleadoUpdateView.as_view(), name='empleado_update'),
-    path('empleados/eliminar/<int:pk>/', EmpleadoDeleteView.as_view(), name='empleado_delete'),
 ]

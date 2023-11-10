@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.views.generic import ListView,CreateView,DeleteView,UpdateView
+from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
+from django.views.generic import ListView
 from .models import Departamento, Cargo, Empleado
 from django.shortcuts import render, get_object_or_404
 
-
+def CONTACTO(request):
+    return render(request, 'contacto.html')
 # Define una vista llamada BASE que renderiza la plantilla 'base.html'.
 def BASE(request):
     return render(request, 'base.html')
@@ -137,23 +138,4 @@ def listar_empleados(request):
     empleados = Empleado.objects.all()  # Obtener todos los objetos Empleados de la base de datos
     return render(request, 'empleado/empleado_list.html', {'empleados': empleados})
 
-# Crear un Empleados
-class EmpleadoCreateView(CreateView):
-    model = Empleado
-    template_name = 'empleado_create.html'
-    fields = ['num_documento', 'nombres','apellido1', 'apellido2','telefono', 'correo','estado']
-    success_url = '/empleados/'  # Redirigir a la lista de empleado después de crear uno
 
-#Actualizar Empleados
-class EmpleadoUpdateView(UpdateView):
-    model = Empleado
-    template_name = 'empleado_update.html'
-    fields = ['num_documento', 'nombres','apellido1', 'apellido2','telefono', 'correo','estado']
-    success_url = '/empleados/'  # Redirigir a la lista de empleado después de crear uno
-
-# Eliminar un Empleados
-
-class EmpleadoDeleteView(DeleteView):
-    model = Empleado
-    template_name = 'empleado_delete.html'
-    success_url = '/Empleados/'  # Redirigir a la lista de empleado después de eliminar uno

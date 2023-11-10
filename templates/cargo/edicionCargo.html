@@ -4,7 +4,7 @@
 {% block content %}
 <div class="content-wrapper">
     <div class="card">
-        <h1 class="card-header">Editar Cargo</h1>
+        <h1 class="card-header">Actualizar Cargo</h1>
         <form method="post" action="{% url 'editarCargo' cargo.id %}" class="card-body">
             {% csrf_token %}
             <div class="form-group">
